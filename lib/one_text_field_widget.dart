@@ -1,10 +1,19 @@
+import 'package:bitirme_projesi/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OneTextFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   final String? Function(String?)? validator;
-  const OneTextFieldWidget({super.key, required this.controller, required this.labelText, this.validator});
+  final TextInputAction? inputAction;
+  const OneTextFieldWidget({
+    super.key,
+    required this.controller,
+    required this.labelText,
+    this.validator,
+    required this.inputAction,
+  });
 
   @override
   State<OneTextFieldWidget> createState() => _OneTextFieldWidgetState();
@@ -18,17 +27,22 @@ class _OneTextFieldWidgetState extends State<OneTextFieldWidget> {
       child: TextFormField(
         validator: widget.validator,
         controller: widget.controller,
+        onChanged: (s) {
+          validateTextField(s);
+        },
+        textInputAction: widget.inputAction,
+        inputFormatters: [
+          FilteringTextInputFormatter(RegExp("[0-9.-]"), allow: true),
+        ],
         style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-            // labelText: widget.labelText,
             focusColor: Colors.blue,
-            // disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
             focusedBorder:
                 OutlineInputBorder(borderSide: const BorderSide(color: Colors.blueAccent, width: 2), borderRadius: BorderRadius.circular(8)),
             fillColor: Colors.red,
             label: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(2.0),
               child: Text(
                 widget.labelText,
                 style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18),

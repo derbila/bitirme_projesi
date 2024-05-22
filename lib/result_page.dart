@@ -14,7 +14,7 @@ class ResultPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text("This is the result:"),
+            const Text("ETo:"),
             const SizedBox(
               height: 25,
             ),
